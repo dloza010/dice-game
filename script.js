@@ -58,7 +58,6 @@ function rollDice(){
         }
         // Switch to next player
         else{
-            scores[activePlayer] = 0;
             switchPlayer();
         }
     }
@@ -67,7 +66,7 @@ function rollDice(){
 function holdScore(){
     if(playing){
         // if score greater than 20, player wins
-        if(scores[activePlayer] >= 20){
+        if(scores[activePlayer] >= 100){
             diceDOMElement.classList.add('hidden');
             playing = false;
             document
