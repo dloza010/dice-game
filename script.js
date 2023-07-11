@@ -26,10 +26,16 @@ function newGame(){
     activePlayer = 0;
     playing = true;
     diceDOMElement.classList.add('hidden');
+
+    player0DOMElement.classList.remove('player--winner');
+    player1DOMElement.classList.remove('player--winner');
+    player0DOMElement.classList.add('player--active');
+    player1DOMElement.classList.remove('player--active');
 };
 newGame();
 
 function switchPlayer(){
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
     activePlayer = activePlayer === 0 ? 1 : 0;
     player0DOMElement.classList.toggle('player--active');
     player1DOMElement.classList.toggle('player--active');
@@ -48,11 +54,11 @@ function rollDice(){
         if(diceRollValue !== 1){
             scores[activePlayer] += diceRollValue;
             document.getElementById(`current--${activePlayer}`).textContent = scores[activePlayer];
+            document.querySelector(`#score--${activePlayer}`).textContent = scores[activePlayer];
         }
         // Switch to next player
         else{
             scores[activePlayer] = 0;
-            document.getElementById(`current--${activePlayer}`).textContent = 0;
             switchPlayer();
         }
     }
@@ -64,11 +70,16 @@ function holdScore(){
         if(scores[activePlayer] >= 20){
             diceDOMElement.classList.add('hidden');
             playing = false;
+            document
+                .querySelector(`.player--${activePlayer}`)
+                .classList.add('player--winner');
+            document
+                .querySelector(`.player--${activePlayer}`)
+                .classList.remove('player--active');    
             
         }
         // else switch player
         else{
-            document.querySelector(`#score--${activePlayer}`).textContent = scores[activePlayer];
             switchPlayer();
         }  
     }
